@@ -1,9 +1,9 @@
-package com.smart;
+package com.smart.vertx;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import com.smart.Main.SmartMain;
+import com.smart.main.SmartMain;
 
 import io.vertx.core.AbstractVerticle;
 
@@ -19,13 +19,16 @@ public class SmartVerticle extends AbstractVerticle {
 		Router router = Router.router(vertx);
 
 		// Bind "/" to our hello message - so we are still compatible.
-		router.route("/").handler(routingContext -> {
+		router.route("/smart").handler(routingContext -> {
 			HttpServerResponse response = routingContext.response();
-			response.putHeader("content-type", "text/html").end("<h1>Hello from my first Vert.x 3 application</h1>");
+			response.putHeader("content-type", "text/html")
+				.end("<h1>Hello from my first Vert.x 3 application</h1>");
 		});
+		router.route("/api-console/*").handler(StaticHandler.create("raml"));
 		router.route("/assets/*").handler(StaticHandler.create("assets"));
 		vertx.createHttpServer().requestHandler(router::accept)
-			.listen(8080, result -> {
+			.listen(8080, 
+					result -> {
 			if (result.succeeded()) {
 				fut.complete();
 			} else {
