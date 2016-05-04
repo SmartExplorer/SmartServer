@@ -11,7 +11,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.smart.main.SmartMain;
+import com.smart.services.VertxRunner;
 
 
 public class APITest {
@@ -24,7 +24,7 @@ public class APITest {
 
 	@BeforeClass
 	public static void bootServer() {
-		SmartMain.vertxRunner();
+		VertxRunner.vertxRunner();
 	}
 
 	@Before

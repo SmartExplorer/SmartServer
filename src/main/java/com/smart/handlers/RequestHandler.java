@@ -1,5 +1,9 @@
 package com.smart.handlers;
 
-public class RequestHandler {
+import io.vertx.ext.web.RoutingContext;
 
+public class RequestHandler {
+	public static void handleRequest(RoutingContext routingContext) {
+		
+	}
 }

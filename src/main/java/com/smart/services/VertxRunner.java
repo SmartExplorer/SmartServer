@@ -1,4 +1,4 @@
-package com.smart.main;
+package com.smart.services;
 
 import java.util.Objects;
 
@@ -11,9 +11,9 @@ import com.smart.vertx.SmartVerticle;
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
 import io.vertx.core.json.JsonObject;
-public class SmartMain {
+public class VertxRunner {
 	
-	private static final Logger logger = LogManager.getLogger(SmartMain.class);
+	private static final Logger logger = LogManager.getLogger(VertxRunner.class);
 	public static void main(String[] args) {
 		vertxRunner();
 	}
