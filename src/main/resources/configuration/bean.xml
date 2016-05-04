@@ -7,7 +7,7 @@
 	 http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-		<property name="locations" value="classpath:application.properties" />
+		<property name="locations" value="classpath:*/application.properties" />
 	</bean>
 	<util:map id="configMap" value-type="java.lang.Object">
 		<entry key="port" value="{com.smart.main.port}" />
