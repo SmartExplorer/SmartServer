@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.smart.vertx.SmartVerticle;
+import com.smart.vertx.SmartHttpServerVerticle;
 
 import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Vertx;
@@ -27,7 +27,7 @@ public class VertxRunner {
 			    .setConfig(new JsonObject().put("http.port", 6553)
 			);
 		
-		Vertx.vertx().deployVerticle(SmartVerticle.class.getName(), options, 
+		Vertx.vertx().deployVerticle(SmartHttpServerVerticle.class.getName(), options, 
 				res -> {
 	                if (res.succeeded()) {
 	                	logger.info("Verticle deployed.");                

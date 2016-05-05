@@ -13,20 +13,16 @@ import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.handler.StaticHandler;
 
-public class SmartVerticle extends AbstractVerticle {
-	private static final Logger logger = LogManager.getLogger(VertxRunner.class);
+public class SmartHttpServerVerticle extends AbstractVerticle {
+	private static final Logger logger = LogManager.getLogger(SmartHttpServerVerticle.class);
 	@Override
 	public void start(Future<Void> fut) {
 		Router router = Router.router(vertx);
 
 		// Bind "/" to our hello message - so we are still compatible.
-		router.route("/Smart").handler(routingContext -> {
-			HttpServerResponse response = routingContext.response();
-			response.putHeader("content-type", "application/json")
-				.end("a\na\na\na\n");
-		});
+		router.route("/debug/").handler(RequestHandler::handleTestRequest);
 		router.route("/docs/*").handler(StaticHandler.create("raml"));
-		router.route("/api/*").handler(RequestHandler::handleRequest);
+		router.route("/device/:deviceType").handler(RequestHandler::handleDeviceRequest);
 		vertx.createHttpServer().requestHandler(router::accept)
 			.listen(8080, 
 					result -> {
