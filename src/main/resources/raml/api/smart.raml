@@ -158,8 +158,53 @@ protocols: [ HTTP, HTTPS ]
     description: | # Retrieve by device type
     uriParameters:
      deviceType:
-       displayName: Device Name
-       type: string    
+       displayName: Device Type
+       type: string  
+    post:
+      description:  update device
+      #Post body media type support
+      #text/xml: !!null  # media type text, xml support
+      #application/json: !!null  #media type json support
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "product": {
+                  "id": {
+                      "required": true,
+                      "type": "integer"
+                  },               
+                  "temperature": {
+                      "required": true,
+                      "type": "integer"
+                  },                
+                  "mode": {
+                      "required": true,
+                      "type": "integer"
+                  },                
+                  "fan_speed": {
+                      "required": true,
+                      "type": "integer"
+                  },                
+                  "vane": {
+                      "required": false,
+                      "type": "integer"
+                  }
+              },
+              "required": true,
+              "type": "object"
+            }        
+          example: |
+            {
+              "product": {
+                 "id": 3,
+                 "temperature": 26,
+                 "mode": "cold",
+                 "fan_speed": 3,
+                 "vane":4 //4 is waving, 1/2/3 is position
+              }
+            }  
     get:
       description: Get a device by id
       queryParameters:
