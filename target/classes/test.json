@@ -1,0 +1,12 @@
+                   {
+                     "data": {
+                       "id": 3,
+                       "username": "killjaeden",
+                       "temperature": 26,
+                       "mode": "cold",
+                       "fan_speed": 3,
+                       "vane":4 //4 is waving, 1/2/3 is position
+                     },
+                     "success": true,
+                     "status": 200
+                   }

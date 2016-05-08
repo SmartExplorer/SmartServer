@@ -1,0 +1,378 @@
+#%RAML 0.8
+---
+#===============================================================
+#  Smart API - RAML example
+#  References:
+#    - RAML Specification - http://raml.org/spec.html
+#    - RAML Projects - http://raml.org/projects.html
+#    - RAML Tools  - http://www.apihub.com/raml-tools
+#===============================================================
+title: Smart API
+version: v0.1
+#baseUri: http://Smart.api.apievangelist.com
+baseUri: http://localhost:8080
+#List of media type to support
+mediaType:  application/json
+#List of protocols to support for baseUri
+protocols: [ HTTP, HTTPS ]
+                                  
+#===============================================================
+# API resource definitions
+#===============================================================                        
+          
+/device:
+  uriParameters:
+  displayName: device
+  description: A collection of Smart
+  post:
+    description: Create a product
+    #Post body media type support
+    #text/xml: !!null  # media type text, xml support
+    #application/json: !!null  #media type json support
+    body:
+      application/json:
+        schema: |
+          {
+            "$schema": "http://json-schema.org/draft-03/schema",
+            "product": {
+                "name": {
+                    "required": true,
+                    "type": "string"
+                },
+                "description": {
+                    "required": true,
+                    "type": "string"
+                },                
+                "url": {
+                    "required": true,
+                    "type": "string"
+                },                
+                "image": {
+                    "required": true,
+                    "type": "string"
+                },                
+                "thumbnailUrl": {
+                    "required": true,
+                    "type": "string"
+                },                
+                "keywords": {
+                    "required": true,
+                    "type": "string"
+                },                
+                "brand": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "color": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "itemCondition": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "manufacturer": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "model": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "sku": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "weight": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "width": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "height": {
+                    "required": false,
+                    "type": "string"
+                },                
+                "depth": {
+                    "required": false,
+                    "type": "string"
+                }
+            },
+            "required": true,
+            "type": "object"
+          }        
+        example: |
+          {
+            "product": {
+              "id": "1",
+              "name": "Product One",
+              "description": "This is the full description of the product.",
+              "url": "http://example.com",
+              "image": "http://example.com/image.jpg",
+              "thumbnailUrl": "http://example.com/image-thumb.jpg",
+              "keywords": "western, cowboy",
+              "brand": "Brand Name",
+              "color": "Black",
+              "itemCondition": "New",
+              "manufacturer": "Manufacturer Name",
+              "model": "Black",
+              "sku": "SKU #",
+              "weight": "12 pounds",
+              "width": "12 inches",
+              "height": "12 inches",
+              "depth": "12 inches"
+            }
+          }
+  get:
+    description: Get a list of Smart
+    queryParameters:
+      q:
+        description: Search phrase to look for Smart
+        type: string
+        required: false
+    responses:
+      200:
+        body:
+          application/json: 
+            example: |
+                   {
+                     "data": {
+                       "id": "SbBGk",
+                       "title": "Stiff: The Curious Lives of Human Cadavers",
+                       "description": null,
+                       "datetime": 1341533193,
+                       "genre": "science",
+                       "author": "Mary Roach",
+                       "link": "http://e-bookmobile.com/books/Stiff",
+                     },
+                     "success": true,
+                     "status": 200
+                   }
+                          
+  #---------------------------------------------------------------
+  # Nested resource representing a  single product - name parameter as part of the path.
+  #---------------------------------------------------------------
+  /{deviceType}: 
+    description: | # Retrieve by device type
+    uriParameters:
+     deviceType:
+       displayName: Device Type
+       type: string  
+    post:
+      description:  update device
+      #Post body media type support
+      #text/xml: !!null  # media type text, xml support
+      #application/json: !!null  #media type json support
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "product": {
+                  "id": {
+                      "required": true,
+                      "type": "integer"
+                  },               
+                  "temperature": {
+                      "required": true,
+                      "type": "integer"
+                  },                
+                  "mode": {
+                      "required": true,
+                      "type": "integer"
+                  },                
+                  "fan_speed": {
+                      "required": true,
+                      "type": "integer"
+                  },                
+                  "vane": {
+                      "required": false,
+                      "type": "integer"
+                  }
+              },
+              "required": true,
+              "type": "object"
+            }        
+          example: |
+            {
+              "product": {
+                 "id": 3,
+                 "temperature": 26,
+                 "mode": "cold",
+                 "fan_speed": 3,
+                 "vane":4 //4 is waving, 1/2/3 is position
+              }
+            }  
+    get:
+      description: Get a device by id
+      queryParameters:
+        deviceID:
+          description: The ID of the device
+          type: integer
+          required: true
+      responses:
+        200:
+          body:
+            application/json: 
+              example: |
+                   {
+                     "data": {
+                       "id": "SbBGk",
+                       "title": "Stiff: The Curious Lives of Human Cadavers",
+                       "description": null,
+                       "datetime": 1341533193,
+                       "genre": "science",
+                       "author": "Mary Roach",
+                       "link": "http://e-bookmobile.com/books/Stiff",
+                     },
+                     "success": true,
+                     "status": 200
+                   }
+    put:
+      description: Updates a single product
+      queryParameters:
+        productId:
+          description: The ID of the product
+          type: integer
+          required: true
+      body:
+        application/json:
+          schema: |
+            {
+              "$schema": "http://json-schema.org/draft-03/schema",
+              "product": {
+                  "name": {
+                      "required": true,
+                      "type": "string"
+                  },
+                  "description": {
+                      "required": true,
+                      "type": "string"
+                  },                
+                  "url": {
+                      "required": true,
+                      "type": "string"
+                  },                
+                  "image": {
+                      "required": true,
+                      "type": "string"
+                  },                
+                  "thumbnailUrl": {
+                      "required": true,
+                      "type": "string"
+                  },                
+                  "keywords": {
+                      "required": true,
+                      "type": "string"
+                  },                
+                  "brand": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "color": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "itemCondition": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "manufacturer": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "model": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "sku": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "weight": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "width": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "height": {
+                      "required": false,
+                      "type": "string"
+                  },                
+                  "depth": {
+                      "required": false,
+                      "type": "string"
+                  }
+              },
+              "required": true,
+              "type": "object"
+            }        
+          example: |
+            {
+              "product": {
+                "id": "1",
+                "name": "Product One",
+                "description": "This is the full description of the product.",
+                "url": "http://example.com",
+                "image": "http://example.com/image.jpg",
+                "thumbnailUrl": "http://example.com/image-thumb.jpg",
+                "keywords": "western, cowboy",
+                "brand": "Brand Name",
+                "color": "Black",
+                "itemCondition": "New",
+                "manufacturer": "Manufacturer Name",
+                "model": "Black",
+                "sku": "SKU #",
+                "weight": "12 pounds",
+                "width": "12 inches",
+                "height": "12 inches",
+                "depth": "12 inches"
+              }
+            }          
+      responses:
+        200:
+          body:
+            application/json: 
+              example: |
+                   {
+                     "data": {
+                       "id": "SbBGk",
+                       "title": "Stiff: The Curious Lives of Human Cadavers",
+                       "description": null,
+                       "datetime": 1341533193,
+                       "genre": "science",
+                       "author": "Mary Roach",
+                       "link": "http://e-bookmobile.com/books/Stiff",
+                     },
+                     "success": true,
+                     "status": 200
+                   }
+    delete:
+      description: Delete a single product
+      queryParameters:
+        productId:
+          description: The ID of the product
+          type: integer
+          required: true
+      responses:
+        200:
+          body:
+            application/json: 
+              example: |
+                   {
+                     "data": {
+                       "id": "SbBGk",
+                       "title": "Stiff: The Curious Lives of Human Cadavers",
+                       "description": null,
+                       "datetime": 1341533193,
+                       "genre": "science",
+                       "author": "Mary Roach",
+                       "link": "http://e-bookmobile.com/books/Stiff",
+                     },
+                     "success": true,
+                     "status": 200
+                   }     
